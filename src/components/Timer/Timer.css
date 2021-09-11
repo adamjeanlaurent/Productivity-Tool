@@ -1,0 +1,42 @@
+* {
+    font-family: 'Source Code Pro', monospace !important;
+}
+
+#timer {
+    text-align: center;
+    margin-top: 10%;
+    font-size: 15vw;
+    color: white;
+}
+
+body {
+    background-color: #595260 !important;
+}
+
+#menuBar {
+    margin-top: 10vh;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    width: 10vw;
+    height: 10vh;
+    border-radius: 25px;
+}
+
+button:hover {
+    opacity: 0.6;
+}
+
+select {
+    border-radius: 25px;
+}
+
+#workTime {
+    background-color: #FFD369;
+}
+
+#breakTime {
+    background-color:#F4ABC4;
+}
