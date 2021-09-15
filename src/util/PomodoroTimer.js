@@ -1,4 +1,5 @@
 import { secondsToFormattedTime } from './constant';
+import Logger from './logger';
 const { ipcRenderer } = window.require("electron");
 
 export default class Timer {
@@ -9,12 +10,12 @@ export default class Timer {
         this.interval = null;
         this.currentTotalTicks = 0;
         this.sessionType = '';
+        this.audio =  new Audio('public_sound_beep.mp3');
     }
 
     PlaySound() {
-        const audio = new Audio('public_sound_beep.mp3');
         for(let i = 0; i < 3; i++) {
-            setTimeout(() => { audio.play() }, 1000 * (i + 1));
+            setTimeout(() => { this.audio.play() }, 1000 * (i + 1));
         }
         document.querySelector(this.selector).textContent = '⏰';
     }
@@ -23,12 +24,17 @@ export default class Timer {
         const date = new Date();
         const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         const formattedTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+        const log = `${formattedDate} ${formattedTime} ${this.currentTotalTicks} ${this.sessionType}\n`;
+
         ipcRenderer.invoke('write', [
             formattedDate,
             formattedTime,
             this.currentTotalTicks,
             this.sessionType
         ]);
+        
+        Logger.timeStamp(`Logged: ${log}`);
         this.currentTotalTicks = 0;
     }
 
@@ -55,6 +61,7 @@ export default class Timer {
     }
 
     Tick() {
+        Logger.heartbeat();
         // sets time in DOM
         if(this.ticksLeft === 0) {
             clearInterval(this.interval);
@@ -69,7 +76,6 @@ export default class Timer {
 
      UpdateDom() {
         const emoji = this.sessionType === 'break' ? '🛌' : '😤';
-        console.log(this.sessionType, emoji);
         if(this.selector) {
             document.querySelector(this.selector).textContent = secondsToFormattedTime(this.ticksLeft) + ' ' + emoji;
         }

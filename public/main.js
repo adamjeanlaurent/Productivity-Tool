@@ -13,6 +13,8 @@ const createWindow = () => {
             contextIsolation: false
         }
     });
+
+    window.webContents.setBackgroundThrottling(false); // https://github.com/electron/electron/issues/7079
     window.webContents.openDevTools();
     window.loadURL('http://localhost:3000');
 }

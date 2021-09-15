@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import PomodoroTimer from '../../util/PomodoroTimer';
-import { secondsToFormattedTime, MINUTE } from '../../util/constant';
+import { MINUTE } from '../../util/constant';
 import './Timer.css'
 import { withRouter, Link } from 'react-router-dom';
 

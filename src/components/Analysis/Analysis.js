@@ -1,6 +1,6 @@
 import { Chart } from "react-google-charts";
 import { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import Logger from '../../util/logger';
 const { ipcRenderer } = window.require('electron');
@@ -67,10 +67,10 @@ function Analysis() {
         }
 
 
-        const breakInMinutes = Math.floor((totalBreakTime / 60)).toFixed(2);
-        const workInMinutes = Math.floor((totalWorkTime / 60)).toFixed(2);
-        const breakInHours = Math.floor((breakInMinutes / 60)).toFixed(2);
-        const workInHours = Math.floor((workInMinutes / 60)).toFixed(2);
+        const breakInMinutes = ((totalBreakTime / 60)).toFixed(2);
+        const workInMinutes = ((totalWorkTime / 60)).toFixed(2);
+        const breakInHours =((breakInMinutes / 60)).toFixed(2);
+        const workInHours = ((workInMinutes / 60)).toFixed(2);
     
         changeTimeReport({
             breakInMinutes: breakInMinutes,
@@ -99,6 +99,7 @@ function Analysis() {
                     <h1 style = {{'color': 'blue'}}>Selected Date: {`${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`}</h1>
                     <h2 id="error" style = {{'color': 'red'}}></h2>
                     <button onClick={fetchChartData}>See Chart</button>
+                    <Link to={{ pathname: '/' }}><button id="analysis" type="button" className ="btn btn-primary">Timer</button></Link>
                 </div>
             }
 
@@ -152,6 +153,7 @@ function Analysis() {
                     </tbody>
                     </table>
                     <button onClick={backToCalendar}>Back To Calendar</button>
+                    <Link to={{ pathname: '/' }}><button id="analysis" type="button" className ="btn btn-primary">Timer</button></Link>
                 </div>
             }
         </div>
