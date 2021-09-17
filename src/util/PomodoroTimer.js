@@ -15,7 +15,14 @@ export default class Timer {
 
     PlaySound() {
         for(let i = 0; i < 3; i++) {
-            setTimeout(() => { this.audio.play() }, 1000 * (i + 1));
+            setTimeout(() => { 
+                try {
+                    this.audio.play();
+                }
+                catch {
+                    console.log('Error Playing Audio!');
+                }
+             }, 1000 * (i + 1));
         }
         document.querySelector(this.selector).textContent = '⏰';
     }

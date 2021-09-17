@@ -1,5 +1,5 @@
 import { Chart } from "react-google-charts";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import Logger from '../../util/logger';
@@ -71,14 +71,17 @@ function Analysis() {
         const workInMinutes = ((totalWorkTime / 60)).toFixed(2);
         const breakInHours =((breakInMinutes / 60)).toFixed(2);
         const workInHours = ((workInMinutes / 60)).toFixed(2);
-    
+
+        const totalTimeTracked = (parseFloat(workInHours) + parseFloat(breakInHours));
+
         changeTimeReport({
             breakInMinutes: breakInMinutes,
             workInMinutes: workInMinutes,
             breakInHours: breakInHours,
             workInHours: workInHours,
             firstLog: chartData[0].time,
-            lastLog: chartData[chartData.length - 1].time
+            lastLog: chartData[chartData.length - 1].time,
+            totalTimeTracked: totalTimeTracked
         });
         changeCurrentChartData(finalizedData);
         changeHideCalendar(true);
@@ -135,7 +138,7 @@ function Analysis() {
                         <td>{timeReport.breakInHours}</td>
                         </tr>
                         <tr>
-                        <th scope="row">Work/Miuntes</th>
+                        <th scope="row">Work/Minutes</th>
                         <td>{timeReport.workInMinutes}</td>
                         </tr>
                         <tr>
@@ -149,6 +152,10 @@ function Analysis() {
                         <tr>
                         <th scope="row">Last Log</th>
                         <td>{timeReport.lastLog}</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">Time Online/Hours</th>
+                        <td>{timeReport.totalTimeTracked}</td>
                         </tr>
                     </tbody>
                     </table>
