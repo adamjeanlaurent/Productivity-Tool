@@ -14,6 +14,7 @@ export default class Timer {
     }
 
     PlaySound() {
+        new Notification('Pomodoro Timer ⏰', { body: 'Timer Up! :)' });
         for(let i = 0; i < 3; i++) {
             setTimeout(() => { 
                 try {
