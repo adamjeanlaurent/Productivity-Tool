@@ -17,13 +17,18 @@ function Analysis() {
 
     const fetchChartData = async () => {
         const allChartData = await ipcRenderer.invoke('read');
+
         logging && Logger.g(`allChartData: ${allChartData}`);
         logging && Logger.g(`allChartData length: ${allChartData.length}`);
+
         for(let chartData of allChartData) {
             logging && Logger.g(chartData);
         }
+
         const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`; 
+
         logging && Logger.g(`requestedDate: ${requestedDate}`);
+
         const chartData = allChartData.filter(data => data.date === requestedDate);
 
         if(chartData.length === 0) {
@@ -34,6 +39,7 @@ function Analysis() {
         document.querySelector('#error').textContent = '';
 
         logging && Logger.g(`chartData: ${chartData}`);
+
         for(let cd of chartData) {
             logging && Logger.g(cd);
         }
@@ -62,6 +68,7 @@ function Analysis() {
         const finalizedData = [chartHeading, ['Work', totalWorkTime], ['Break', totalBreakTime]];
 
         logging && Logger.g(`finalizedData: ${finalizedData}`);
+        
         for(let fd of finalizedData) {
             logging && Logger.g(fd);
         }

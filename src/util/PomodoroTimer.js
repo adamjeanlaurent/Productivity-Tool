@@ -10,20 +10,30 @@ export default class Timer {
         this.interval = null;
         this.currentTotalTicks = 0;
         this.sessionType = '';
-        this.audio =  new Audio('public_sound_beep.mp3');
+        try {
+            this.audio =  new Audio('public_sound_beep.mp3');
+        }
+
+        catch {
+            this.audio = null;
+        }
+       
     }
 
     PlaySound() {
         new Notification('Pomodoro Timer ⏰', { body: 'Timer Up! :)' });
-        for(let i = 0; i < 3; i++) {
-            setTimeout(() => { 
-                try {
-                    this.audio.play();
-                }
-                catch {
-                    console.log('Error Playing Audio!');
-                }
-             }, 1000 * (i + 1));
+
+        if(this.audio) {
+            for(let i = 0; i < 3; i++) {
+                setTimeout(() => { 
+                    try {
+                        this.audio.play();
+                    }
+                    catch {
+                        console.log('Error Playing Audio!');
+                    }
+                 }, 1000 * (i + 1));
+            }
         }
         document.querySelector(this.selector).textContent = '⏰';
     }
