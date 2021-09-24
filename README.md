@@ -5,4 +5,5 @@ Usage:
 
 Functionality:
 - Pomodoro Timer
+- ToDoList
 - Tracks your time so you can analyze it with charts and easily see other data
