@@ -1,8 +1,8 @@
-import { secondsToFormattedTime } from './constant';
-import Logger from './logger';
+import { secondsToFormattedTime } from './dateTime';
+import Logger from './Logger';
 const { ipcRenderer } = window.require("electron");
 
-export default class Timer {
+export default class PomodoroTimer {
     constructor(selector) {
         this.selector = selector;
         this.ticksLeft = 0;
@@ -45,7 +45,7 @@ export default class Timer {
 
         const log = `${formattedDate} ${formattedTime} ${this.currentTotalTicks} ${this.sessionType}\n`;
 
-        ipcRenderer.invoke('write', [
+        ipcRenderer.invoke('writeTimerData', [
             formattedDate,
             formattedTime,
             this.currentTotalTicks,

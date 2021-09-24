@@ -2,7 +2,7 @@ import { Chart } from "react-google-charts";
 import { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
-import Logger from '../../util/logger';
+import Logger from '../../util/Logger';
 const { ipcRenderer } = window.require('electron');
 
 function Analysis() {
@@ -16,7 +16,7 @@ function Analysis() {
     }
 
     const fetchChartData = async () => {
-        const allChartData = await ipcRenderer.invoke('read');
+        const allChartData = await ipcRenderer.invoke('readTimerData');
 
         logging && Logger.g(`allChartData: ${allChartData}`);
         logging && Logger.g(`allChartData length: ${allChartData.length}`);
@@ -25,7 +25,7 @@ function Analysis() {
             logging && Logger.g(chartData);
         }
 
-        const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`; 
+        const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
 
         logging && Logger.g(`requestedDate: ${requestedDate}`);
 
@@ -73,7 +73,6 @@ function Analysis() {
             logging && Logger.g(fd);
         }
 
-
         const breakInMinutes = ((totalBreakTime / 60)).toFixed(2);
         const workInMinutes = ((totalWorkTime / 60)).toFixed(2);
         const breakInHours =((breakInMinutes / 60)).toFixed(2);
@@ -102,10 +101,7 @@ function Analysis() {
         <div>
             {!hideCalendar && 
                 <div> 
-                    <Calendar
-                    onChange={changeCalendarDate}
-                    value={calendarDate}
-                    />
+                    <Calendar onChange={changeCalendarDate} value={calendarDate}/>
                     <h1 style = {{'color': 'blue'}}>Selected Date: {`${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`}</h1>
                     <h2 id="error" style = {{'color': 'red'}}></h2>
                     <button onClick={fetchChartData}>See Chart</button>

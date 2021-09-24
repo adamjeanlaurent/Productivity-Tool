@@ -1,0 +1,14 @@
+li:hover {
+    text-decoration: underline;
+    color: lightcoral;
+}
+
+li {
+    color: white;
+    display: flex;
+}
+
+#inlineBlock {
+    display: inline-block;
+    margin-left: 3rem;
+}

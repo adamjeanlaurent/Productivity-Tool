@@ -10,8 +10,8 @@ function App() {
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true"></link>
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet"></link>
-          <Route exact path="/" component = {Timer}/>
-          <Route path = "/analysis" component = {Analysis}/>
+        <Route exact path="/" component = {Timer}/>
+        <Route path = "/analysis" component = {Analysis}/>
     </HashRouter>
   );
 }

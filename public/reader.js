@@ -1,9 +1,10 @@
 const fs = require('fs');
 
-const c_filePath = './timeReport.txt';
+const c_TimerDataFilePath = './timeReport.txt';
+const c_ToDoListDataFilePath = './toDoListData.txt';
 
-const readFromFile = async () => {
-    const data = fs.readFileSync(c_filePath, 'UTF-8');
+const readTimerDataFromFile = async () => {
+    const data = fs.readFileSync(c_TimerDataFilePath, 'UTF-8');
     const lines = data.split(/\r?\n/);
     const parsedData = [];
 
@@ -17,6 +18,13 @@ const readFromFile = async () => {
     return parsedData;
 }
 
+// const readToDoListDataFromFile = async () => {
+//     const data = fs.readFileSync(c_ToDoListDataFilePath, 'UTF-8');
+//     const lines = data.split(/\r?\n/);
+//     return lines;
+// }
+
 module.exports = {
-    readFromFile
+    readTimerDataFromFile,
+    // readToDoListDataFromFile
 };

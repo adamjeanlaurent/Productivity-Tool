@@ -1,5 +1,5 @@
 import colors from 'colors';
-import { formatAMPM } from './date';
+import { formatAMPM } from './dateTime';
 
 export default class Logger {
     static r(t) {
