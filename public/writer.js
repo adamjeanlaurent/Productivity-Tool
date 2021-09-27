@@ -13,16 +13,20 @@ const writeTimerDataToFile = async (event, [ date, time, timeAllotted, sessionTy
     }
 }
 
-// const writeToDoListDataToFile = async (event, [item]) => {
-//     try{
-//         await fs.appendFile(c_ToDoListDataFilePath, log);
-//     }
-//     catch(e) {
-//         console.log(e.message);
-//     }
-// }
+const writeToDoListDataToFile = async (event, [toDoList]) => {
+    console.log('write to do list');
+    for(let toDoItem of toDoList) {
+        console.log(`writing to do list item ${toDoItem}`);
+        try{
+            await fs.appendFile(c_ToDoListDataFilePath, toDoItem);
+        }
+        catch(e) {
+            console.log(e.message);
+        }
+    }
+}
 
 module.exports = {
     writeTimerDataToFile,
-    // writeToDoListDataToFile
+    writeToDoListDataToFile
 }

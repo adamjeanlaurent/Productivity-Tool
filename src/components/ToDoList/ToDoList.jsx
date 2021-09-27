@@ -1,16 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useBeforeunload } from 'react-beforeunload';
 import './ToDoList.css'
 
-export default function ToDoList() {
-	// const crappyHashFunctionBecauseIHaveNoInternetRightNow = (string) => {
-	// 	// do random shit
-	// 	// this is intentially bad
-	// 	const magicNumber = 5736;
-	// 	let sumOfLetters = 0;
-	// 	string.forEach(letter => sumOfLetters += letter.charCodeAt(0));
-	// 	return magicNumber + sumOfLetters;
-	// }
+const { ipcRenderer } = window.require('electron');
 
+export default function ToDoList() {
+	useEffect(async () => {
+		const readToDoListFromFileSystem = async () => {
+			const toDoItems = await ipcRenderer.invoke('readToDoListData');
+			return toDoItems;
+		}
+
+		const existingToDoItems = await readToDoListFromFileSystem();
+		setToDoList(existingToDoItems);
+	}, []);
+
+	useBeforeunload(() => {
+		if (toDoList.length !== 0) {
+		  writeToDoListToFileSystem();
+		}
+	});
+	
 	const isDuplicate = (potentialNewToDoItem) => {
 		for(let toDoItem of toDoList) {
 			if(toDoItem === potentialNewToDoItem) {
@@ -20,17 +30,15 @@ export default function ToDoList() {
 		return false;
 	}
 
-	// const writeNewToDoListItemToFileSystem = (newToDoItem) => {
-    //     ipcRenderer.invoke('writeToDoListData', [
-	// 		newToDoItem
-    //     ]);
-	// }
+	const writeToDoListToFileSystem = async () => {
+		try {
+			await ipcRenderer.invoke('writeToDoListData', [
+				toDoList
+			]);
+		}
 
-	// const removeToDoListItemFromFileSystem = (toDoItem) => {
-	// 	ipcRenderer.invoke('removeToDoListItem', [
-	// 		toDoItem
-	// 	]);
-	// }
+		catch {}
+	}
 	
 	const removeToDoItem = (event) => {
 		const contentsOfToDoToRemove = event.target.textContent;

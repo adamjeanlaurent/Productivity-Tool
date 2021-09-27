@@ -1,6 +1,6 @@
 const { app, BrowserWindow , ipcMain} = require('electron');
-const { writeTimerDataToFile } = require('./writer');
-const { readTimerDataFromFile} = require('./reader');
+const { writeTimerDataToFile, writeToDoListDataToFile } = require('./writer');
+const { readTimerDataFromFile, readToDoListDataFromFile } = require('./reader');
 require('@electron/remote/main').initialize();
 
 const createWindow = () => {
@@ -22,7 +22,7 @@ const createWindow = () => {
 ipcMain.handle('writeTimerData', writeTimerDataToFile);
 ipcMain.handle('readTimerData', readTimerDataFromFile);
 
-// ipcMain.handle('writeToDoData', writeToDoListDataToFile);
-// ipcMain.handle('readToDoListData', readToDoListDataFromFile);
+ipcMain.handle('writeToDoListData', writeToDoListDataToFile);
+ipcMain.handle('readToDoListData', readToDoListDataFromFile);
 
 app.on('ready', createWindow);

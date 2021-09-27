@@ -18,13 +18,24 @@ const readTimerDataFromFile = async () => {
     return parsedData;
 }
 
-// const readToDoListDataFromFile = async () => {
-//     const data = fs.readFileSync(c_ToDoListDataFilePath, 'UTF-8');
-//     const lines = data.split(/\r?\n/);
-//     return lines;
-// }
+const readToDoListDataFromFile = async () => {
+    console.log('reading data: ...');
+    try {
+        console.log('getting data');
+        const data = fs.readFileSync(c_ToDoListDataFilePath, 'UTF-8');
+        return Array.from(data);
+    }
+
+    catch(e) {
+        console.log(e.message);
+        return [];
+    }
+   
+   
+    // const lines = data.split(/\r?\n/);
+}
 
 module.exports = {
     readTimerDataFromFile,
-    // readToDoListDataFromFile
+    readToDoListDataFromFile
 };
