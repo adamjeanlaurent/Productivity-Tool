@@ -6,6 +6,7 @@ import { MINUTE } from '../../util/constant';
 import './Timer.css'
 import { withRouter, Link } from 'react-router-dom';
 import ToDoList from '../ToDoList/ToDoList';
+import { isFeatureEnabled } from '../../util/constant';
 
 const electron = window.require('electron');
 const powerSaveBlocker = electron.remote.powerSaveBlocker;
@@ -75,7 +76,7 @@ function Timer(props) {
                     <button id = "pause" type="button" className="btn btn-danger" onClick={handlePause}>Pause</button>
                     <Link to={{ pathname: '/analysis' }}><button id="analysis" type="button" className ="btn btn-primary" onClick={() => {powerSaveBlocker.stop(powerBlockerId)}}>Analysis</button></Link>
             </div>
-            <ToDoList/>
+            { isFeatureEnabled('ToDoList') && <ToDoList/> }
         </div>
     );
 }

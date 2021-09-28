@@ -52,7 +52,7 @@ export default function ToDoList() {
 		const inputElement = document.getElementById('newToDoInput');
 		const newToDoItem = inputElement.value;
 		if(event.which !== ENTER_KEY || newToDoItem === '' || isDuplicate(newToDoItem)) return;
-		setToDoList([...toDoList, newToDoItem]);;
+		setToDoList([...toDoList, newToDoItem]);
 		inputElement.value = '';
 	}
 
