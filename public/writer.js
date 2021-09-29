@@ -14,7 +14,7 @@ const writeTimerDataToFile = async (event, [ date, time, timeAllotted, sessionTy
 }
 
 const writeToDoListDataToFile = async (event, [toDoList]) => {
-    console.log('write to do list');
+    console.log('write to do list ' + toDoList);
     for(let toDoItem of toDoList) {
         console.log(`writing to do list item ${toDoItem}`);
         try{

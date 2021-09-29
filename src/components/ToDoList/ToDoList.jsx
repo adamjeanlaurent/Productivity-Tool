@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useBeforeunload } from 'react-beforeunload';
-import './ToDoList.css'
+import { isFeatureEnabled, webServerURL } from '../../util/constant';
+import './ToDoList.css';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -30,14 +31,31 @@ export default function ToDoList() {
 		return false;
 	}
 
-	const writeToDoListToFileSystem = async () => {
-		try {
-			await ipcRenderer.invoke('writeToDoListData', [
-				toDoList
-			]);
+	const makeWriteToDoListRequest = async () => {
+		const options = {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ toDoList: toDoList })
 		}
 
-		catch {}
+		await fetch(`${webServerURL}/writeTodoList`, options);
+	}
+
+	const writeToDoListToFileSystem = async () => {
+		if(!isFeatureEnabled('writeToDoListViaWebServer')) {
+			try {
+				await ipcRenderer.invoke('writeToDoListData', [
+					toDoList
+				]);
+			}
+	
+			catch {}
+		}
+		else {
+			await makeWriteToDoListRequest();
+		}
 	}
 	
 	const removeToDoItem = (event) => {

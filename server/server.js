@@ -1,18 +1,29 @@
-// const express = require('express');
-// const fs = require('fs');
-// const cors = require('cors');
+const express = require('express');
+const fs = require('fs/promises');
+const cors = require('cors');
 
-// const app = express();
+const app = express();
 
-// app.use(cors());
-// app.use(express.json());
+app.use(cors());
+app.use(express.json());
 
-// app.post('/', (req, res) => {
-//     const todos = req.params.todos;
-// });
+const c_ToDoListDataFilePath = './toDoListData.txt';
 
-// app.listen(6532, () => {
-//     console.log('server running!');
-// });
+app.post('/writeTodoList', async (req, res) => {
+    const toDoList = req.body.toDoList;
 
-// leaving this code here bc maybe i'll use it later
+    console.log('write to do list ' + toDoList);
+    for(let toDoItem of toDoList) {
+        console.log(`writing to do list item ${toDoItem}`);
+        try{
+            await fs.appendFile(c_ToDoListDataFilePath, `${toDoItem}\n`);
+        }
+        catch(e) {
+            console.log(e.message);
+        }
+    }
+});
+
+app.listen(6532, () => {
+    console.log('server running!');
+});

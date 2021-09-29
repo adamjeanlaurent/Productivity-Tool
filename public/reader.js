@@ -20,10 +20,17 @@ const readTimerDataFromFile = async () => {
 
 const readToDoListDataFromFile = async () => {
     console.log('reading data: ...');
+    let parsedData = [];
     try {
         console.log('getting data');
         const data = fs.readFileSync(c_ToDoListDataFilePath, 'UTF-8');
-        return Array.from(data);
+        const lines = data.split(/\r?\n/);
+        
+        for(let line of lines) {
+            // parse    
+            parsedData.push(line);
+        }
+        return parsedData;
     }
 
     catch(e) {
