@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useBeforeunload } from 'react-beforeunload';
 import { isFeatureEnabled, webServerURL } from '../../util/constant';
+import MyHttpClient from '../../util/MyHttpClient';
 import './ToDoList.css';
 
 const { ipcRenderer } = window.require('electron');
@@ -32,15 +33,7 @@ export default function ToDoList() {
 	}
 
 	const makeWriteToDoListRequest = async () => {
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ toDoList: toDoList })
-		}
-
-		await fetch(`${webServerURL}/writeTodoList`, options);
+		await MyHttpClient.Post(`${webServerURL}/writeTodoList`, { toDoList: toDoList });
 	}
 
 	const writeToDoListToFileSystem = async () => {

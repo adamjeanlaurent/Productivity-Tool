@@ -1,9 +1,14 @@
 const fs = require('fs');
+const fsSync = require('fs');
 
 const c_TimerDataFilePath = './timeReport.txt';
 const c_ToDoListDataFilePath = './toDoListData.txt';
 
 const readTimerDataFromFile = async () => {
+    if(!fsSync.existsSync(c_TimerDataFilePath)) {
+        fsSync.closeSync(fsSync.openSync(c_TimerDataFilePath, 'w'));
+        return [];
+    }
     const data = fs.readFileSync(c_TimerDataFilePath, 'UTF-8');
     const lines = data.split(/\r?\n/);
     const parsedData = [];
@@ -19,6 +24,11 @@ const readTimerDataFromFile = async () => {
 }
 
 const readToDoListDataFromFile = async () => {
+    if(!fsSync.existsSync(c_ToDoListDataFilePath)) {
+        fsSync.closeSync(fsSync.openSync(c_TimerDataFilePath, 'w'));
+        return [];
+    }
+
     console.log('reading data: ...');
     let parsedData = [];
     try {
@@ -37,9 +47,6 @@ const readToDoListDataFromFile = async () => {
         console.log(e.message);
         return [];
     }
-   
-   
-    // const lines = data.split(/\r?\n/);
 }
 
 module.exports = {

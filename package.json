@@ -37,7 +37,8 @@
     "electron:serve": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm run electron:start\" && node server/server.js",
     "electron:build": "",
     "electron:start": "wait-on tcp:3000 && electron .",
-    "s": "npm run electron:serve"
+    "app": "npm run electron:serve",
+    "server": "node server/server.js"
   },
   "eslintConfig": {
     "extends": [

@@ -8,7 +8,7 @@ export const webServerURL = `http://localhost:${WEB_SERVER_PORT}`;
 // features
 const FEATURES = new Map(
     [
-        [ 'ToDoList', true ],
+        [ 'ToDoList', false ],
         [ 'Analysis', true ],
         ['writeToDoListViaWebServer', true]
     ]
