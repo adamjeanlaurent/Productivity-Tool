@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useBeforeunload } from 'react-beforeunload';
-import { isFeatureEnabled, webServerURL } from '../../util/constant';
+import { webServerURL } from '../../util/constant';
+import { isFeatureEnabled } from '../../util/features';
 import MyHttpClient from '../../util/MyHttpClient';
 import './ToDoList.css';
 

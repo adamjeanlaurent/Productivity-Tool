@@ -17,6 +17,7 @@ export default class MyHttpClient {
             method: 'POST',
             body: JSON.stringify(payload)
         };
+
         await this.SendRequest(url, this.options);
     }
 }

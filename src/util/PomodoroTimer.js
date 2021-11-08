@@ -10,6 +10,8 @@ export default class PomodoroTimer {
         this.interval = null;
         this.currentTotalTicks = 0;
         this.sessionType = '';
+        this.domElement = document.querySelector(this.selector);
+
         try {
             this.audio =  new Audio('public_sound_beep.mp3');
         }
@@ -35,7 +37,7 @@ export default class PomodoroTimer {
                  }, 1000 * (i + 1));
             }
         }
-        document.querySelector(this.selector).textContent = '⏰';
+        this.domElement.textContent = '⏰';
     }
 
      LogSession() {
@@ -95,7 +97,7 @@ export default class PomodoroTimer {
      UpdateDom() {
         const emoji = this.sessionType === 'break' ? '🛌' : '😤';
         if(this.selector) {
-            document.querySelector(this.selector).textContent = secondsToFormattedTime(this.ticksLeft) + ' ' + emoji;
+            this.domElement.textContent = secondsToFormattedTime(this.ticksLeft) + ' ' + emoji;
         }
     }
 }

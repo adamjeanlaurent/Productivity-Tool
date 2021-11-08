@@ -8,6 +8,7 @@ export function formatAMPM(date) {
     minutes = minutes < 10 ? '0'+minutes : minutes;
     seconds = seconds < 10 ? '0'+seconds : seconds;
     let strTime = hours + ':' + minutes + ':' + seconds + ' '+ ampm;
+      
     return strTime;
   }
 

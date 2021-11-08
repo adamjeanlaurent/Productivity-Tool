@@ -6,7 +6,7 @@ import { MINUTE } from '../../util/constant';
 import './Timer.css'
 import { withRouter, Link } from 'react-router-dom';
 import ToDoList from '../ToDoList/ToDoList';
-import { isFeatureEnabled } from '../../util/constant';
+import { isFeatureEnabled } from '../../util/features';
 
 const electron = window.require('electron');
 const powerSaveBlocker = electron.remote.powerSaveBlocker;

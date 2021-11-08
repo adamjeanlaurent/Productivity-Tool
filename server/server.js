@@ -19,6 +19,9 @@ app.post('/writeTodoList', async (req, res) => {
     deleteAndCreateFile(c_ToDoListDataFilePath);
     const toDoList = req.body.toDoList;
 
+    const isTest = req.body.isTest;
+    const toDoListFilePath = isTest ? req.body.testFilePath : c_ToDoListDataFilePath;
+
     console.log('write to do list ' + toDoList);
     for(let toDoItem of toDoList) {
         console.log(`writing to do list item ${toDoItem}`);
