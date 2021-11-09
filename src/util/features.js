@@ -1,7 +1,7 @@
 // features
 const FEATURES = new Map(
     [
-        [ 'ToDoList', false ],
+        [ 'ToDoList', true ],
         [ 'Analysis', true ],
         [ 'writeToDoListViaWebServer', true]
     ]

@@ -1,9 +1,9 @@
 export default class MyHttpClient {
     constructor() { }
-    async SendRequest(url, options = { method: 'GET' }) {
+    static async SendRequest(url, options = { method: 'GET' }) {
+        console.log(options);
         try {
-            const data = await fetch(url, options);
-            return data;
+            await fetch(url, options);
         }
         catch(error) {
             return { error: error.message };
@@ -13,11 +13,13 @@ export default class MyHttpClient {
         await this.SendRequest(url);
     }
     static async Post(url, payload) {
-        this.options = {
+        const options = {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(payload)
         };
-
-        await this.SendRequest(url, this.options);
+        await this.SendRequest(url, options);
     }
 }

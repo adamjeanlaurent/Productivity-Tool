@@ -11,6 +11,7 @@ export default function ToDoList() {
 	useEffect(async () => {
 		const readToDoListFromFileSystem = async () => {
 			const toDoItems = await ipcRenderer.invoke('readToDoListData');
+			console.log(toDoItems);
 			return toDoItems;
 		}
 

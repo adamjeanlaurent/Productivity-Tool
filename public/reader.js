@@ -1,15 +1,18 @@
 const fs = require('fs');
 const fsSync = require('fs');
 
+const FileSystem = require('./FileSystem');
+
 const c_TimerDataFilePath = './timeReport.txt';
 const c_ToDoListDataFilePath = './toDoListData.txt';
 
 const readTimerDataFromFile = async () => {
-    if(!fsSync.existsSync(c_TimerDataFilePath)) {
-        fsSync.closeSync(fsSync.openSync(c_TimerDataFilePath, 'w'));
+    if(!FileSystem.exists(c_TimerDataFilePath)) {
+        FileSystem.create(c_ToDoListDataFilePath);
         return [];
     }
-    const data = fs.readFileSync(c_TimerDataFilePath, 'UTF-8');
+
+    const data = FileSystem.readUTF8(c_TimerDataFilePath);
     const lines = data.split(/\r?\n/);
     const parsedData = [];
 
@@ -24,8 +27,9 @@ const readTimerDataFromFile = async () => {
 }
 
 const readToDoListDataFromFile = async () => {
-    if(!fsSync.existsSync(c_ToDoListDataFilePath)) {
-        fsSync.closeSync(fsSync.openSync(c_TimerDataFilePath, 'w'));
+    if(!FileSystem.exists(c_ToDoListDataFilePath)) {
+        console.log('Creating file!');
+        FileSystem.create(c_ToDoListDataFilePath);
         return [];
     }
 
@@ -33,7 +37,12 @@ const readToDoListDataFromFile = async () => {
     let parsedData = [];
     try {
         console.log('getting data');
-        const data = fs.readFileSync(c_ToDoListDataFilePath, 'UTF-8');
+        const data = FileSystem.readUTF8(c_ToDoListDataFilePath);
+        if(!data) {
+            console.log('file empty!');
+            return [];
+        };
+
         const lines = data.split(/\r?\n/);
         
         for(let line of lines) {
