@@ -1,5 +1,6 @@
 import { secondsToFormattedTime } from './dateTime';
 import Logger from './Logger';
+import { dateStamp, timeStamp } from './dateTime';
 const { ipcRenderer } = window.require("electron");
 
 export default class PomodoroTimer {
@@ -10,7 +11,6 @@ export default class PomodoroTimer {
         this.interval = null;
         this.currentTotalTicks = 0;
         this.sessionType = '';
-        this.domElement = document.querySelector(this.selector);
 
         try {
             this.audio =  new Audio('public_sound_beep.mp3');
@@ -37,13 +37,13 @@ export default class PomodoroTimer {
                  }, 1000 * (i + 1));
             }
         }
-        this.domElement.textContent = '⏰';
+        document.querySelector(this.selector).textContent = '⏰';
     }
 
      LogSession() {
         const date = new Date();
-        const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
-        const formattedTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        const formattedDate = dateStamp(date);
+        const formattedTime = timeStamp(date);
 
         const log = `${formattedDate} ${formattedTime} ${this.currentTotalTicks} ${this.sessionType}\n`;
 
@@ -97,7 +97,7 @@ export default class PomodoroTimer {
      UpdateDom() {
         const emoji = this.sessionType === 'break' ? '🛌' : '😤';
         if(this.selector) {
-            this.domElement.textContent = secondsToFormattedTime(this.ticksLeft) + ' ' + emoji;
+            document.querySelector(this.selector).textContent = secondsToFormattedTime(this.ticksLeft) + ' ' + emoji;
         }
     }
 }

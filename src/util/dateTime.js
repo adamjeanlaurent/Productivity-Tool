@@ -29,3 +29,13 @@ export const secondsToFormattedTime = (sec) => {
 
     return `${minutesStr}:${secondsStr}`;
 }
+
+export const dateStamp = (date) => {
+    const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+    return formattedDate;
+}
+
+export const timestamp = (date) => {
+    const formattedTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    return formattedTime;
+}

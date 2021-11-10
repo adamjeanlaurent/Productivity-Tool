@@ -13,6 +13,23 @@ function Analysis() {
         changeCalendarDate(new Date());
         changeTimeReport({});
         changeCurrentChartData([]);
+        changeCompletedToDoItems([]);
+    }
+
+    const fetchCompletedToDoItems = async () => {
+        const allCompletedDoToItems = await ipcRenderer.invoke('readToDoItemsData');
+
+        const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
+
+        if(allCompletedDoToItems.length) {
+            return;
+        }
+
+        const toDoItemsData = allCompletedDoToItems.filter(data => data.date === requestedDate);
+        
+        return toDoItemsData.map((toDoItemData) => {
+            return toDoItemData.toDoItem;
+        });
     }
 
     const fetchChartData = async () => {
@@ -90,6 +107,7 @@ function Analysis() {
             totalTimeTracked: totalTimeTracked
         });
         changeCurrentChartData(finalizedData);
+        changeCompletedToDoItems(await fetchCompletedToDoItems());
         changeHideCalendar(true);
     }
     
@@ -97,6 +115,7 @@ function Analysis() {
     const [hideCalendar, changeHideCalendar] = useState(false);
     const [currentChartData, changeCurrentChartData] = useState([]);
     const [timeReport, changeTimeReport] = useState({});
+    const [completedToDoItems, changeCompletedToDoItems] = useState([]);
     return (
         <div>
             {!hideCalendar && 

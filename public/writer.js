@@ -5,13 +5,27 @@ const FileSystem = require('./FileSystem');
 
 const c_TimerDataFilePath = './timeReport.txt';
 const c_ToDoListDataFilePath = './toDoListData.txt';
+const c_completedToDoItems = './completedToDoItems.txt';
+
+const writeCompletedToDoItemToFile = async (event, [ date, time, toDoItem, ]) => {
+    if(!FileSystem.exists(c_completedToDoItems)) {
+        FileSystem.create(c_completedToDoItems);
+    }
+    const log = `${date} ${time} ${toDoItem}`;
+    try {
+        await FileSystem.write(c_completedToDoItems, log);
+    }
+    catch(e) {
+        console.log(e.message);
+    }
+};
 
 const writeTimerDataToFile = async (event, [ date, time, timeAllotted, sessionType ]) => {
     if(!FileSystem.exists(c_TimerDataFilePath)) {
         FileSystem.create(c_TimerDataFilePath);
     }
     const log = `${date} ${time} ${timeAllotted} ${sessionType}\n`;
-    try{
+    try {
         await FileSystem.write(c_TimerDataFilePath, log);
     }
     catch(e) {
@@ -39,5 +53,6 @@ const writeToDoListDataToFile = async (event, [toDoList]) => {
 
 module.exports = {
     writeTimerDataToFile,
-    writeToDoListDataToFile
+    writeToDoListDataToFile,
+    writeCompletedToDoItemToFile
 }

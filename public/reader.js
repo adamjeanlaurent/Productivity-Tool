@@ -5,6 +5,27 @@ const FileSystem = require('./FileSystem');
 
 const c_TimerDataFilePath = './timeReport.txt';
 const c_ToDoListDataFilePath = './toDoListData.txt';
+const c_completedToDoItems = './completedToDoItems.txt';
+
+const readCompletedToDoItemsDataFromFile = async () => {
+    if(!FileSystem.exists(c_completedToDoItems)) {
+        FileSystem.create(c_completedToDoItems);
+        return [];
+    }
+
+    const data = FileSystem.readUTF8(c_completedToDoItems);
+    const lines = data.split(/\r?\n/);
+    const parsedData = [];
+
+    for(let line of lines) {
+        // parse    
+        const [date, time, toDoItem] = line.split(' ');
+        if(date && time && toDoItem) {
+            parsedData.push({ date: date, time: time, toDoItem: toDoItem });
+        }
+    }
+    return parsedData;
+}
 
 const readTimerDataFromFile = async () => {
     if(!FileSystem.exists(c_TimerDataFilePath)) {
@@ -60,5 +81,6 @@ const readToDoListDataFromFile = async () => {
 
 module.exports = {
     readTimerDataFromFile,
-    readToDoListDataFromFile
+    readToDoListDataFromFile,
+    readCompletedToDoItemsDataFromFile
 };
