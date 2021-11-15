@@ -11,9 +11,9 @@ const { ipcRenderer } = window.require('electron');
 export default function ToDoList() {
 	useEffect(async () => {
 		const readToDoListFromFileSystem = async () => {
-			const toDoItems = await ipcRenderer.invoke('readToDoListData');
+			let toDoItems = await ipcRenderer.invoke('readToDoListData');
 			toDoItems = toDoItems.filter((toDoItem) => {
-				toDoItem.trim() != ''
+				return toDoItem.trim() != '';
 			});
 			console.log(toDoItems);
 			return toDoItems;
@@ -63,14 +63,16 @@ export default function ToDoList() {
 		// this will remove duplicates items /shrug, could use hashes or ids but this is fine lol
 		const newToDoList = toDoList.filter(toDoItem => toDoItem !== contentsOfToDoToRemove);
 
-		// add to list of completed to do item
-		const date = new Date();
-       
-		await ipcRenderer.invoke('writeCompletedToDoItemData', [
-			dateStamp(date),
-			timeStamp(date),
-			contentsOfToDoToRemove
-		]);
+		if(isFeatureEnabled('trackCompletedToDoItems')) {
+			// add to list of completed to do item
+			const date = new Date();
+		
+			await ipcRenderer.invoke('writeCompletedToDoItemData', [
+				dateStamp(date),
+				timeStamp(date),
+				contentsOfToDoToRemove
+			]);
+		}
 
 		setToDoList(newToDoList);
 	}

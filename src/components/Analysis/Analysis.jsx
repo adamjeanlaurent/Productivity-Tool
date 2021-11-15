@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import Logger from '../../util/Logger';
+import { isFeatureEnabled } from "../../util/features";
 const { ipcRenderer } = window.require('electron');
 
 function Analysis() {
@@ -17,19 +18,29 @@ function Analysis() {
     }
 
     const fetchCompletedToDoItems = async () => {
-        const allCompletedDoToItems = await ipcRenderer.invoke('readToDoItemsData');
+        try {
+            const allCompletedDoToItems = await ipcRenderer.invoke('readToDoItemsData');
 
-        const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
-
-        if(allCompletedDoToItems.length) {
-            return;
+            const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
+    
+            if(!allCompletedDoToItems.length) {
+                return [];
+            }
+    
+            const toDoItemsData = allCompletedDoToItems.filter(data => data.date === requestedDate);
+            
+            const toDoItemsMap = toDoItemsData.map((toDoItemData) => {
+                return toDoItemData.toDoItem;
+            });
+    
+            console.log(toDoItemsMap);
+            return toDoItemsMap; 
         }
 
-        const toDoItemsData = allCompletedDoToItems.filter(data => data.date === requestedDate);
-        
-        return toDoItemsData.map((toDoItemData) => {
-            return toDoItemData.toDoItem;
-        });
+        catch(error) {
+            console.log(error.message);
+            return [];
+        }
     }
 
     const fetchChartData = async () => {
@@ -107,7 +118,10 @@ function Analysis() {
             totalTimeTracked: totalTimeTracked
         });
         changeCurrentChartData(finalizedData);
-        changeCompletedToDoItems(await fetchCompletedToDoItems());
+
+        if(isFeatureEnabled('trackCompletedToDoItems')) {
+            changeCompletedToDoItems(await fetchCompletedToDoItems());
+        }
         changeHideCalendar(true);
     }
     
@@ -181,6 +195,12 @@ function Analysis() {
                         </tr>
                     </tbody>
                     </table>
+                    <h5 style={{color: 'white'}}>Completed To-do Items:</h5>
+                    <ul>
+                        {completedToDoItems.map((completedToDoItem, index) => {
+                            return <li key={index}>{completedToDoItem}</li>
+                        })}
+                    </ul>
                     <button onClick={backToCalendar}>Back To Calendar</button>
                     <Link to={{ pathname: '/' }}><button id="analysis" type="button" className ="btn btn-primary">Timer</button></Link>
                 </div>

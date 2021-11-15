@@ -26,6 +26,6 @@ ipcMain.handle('writeToDoListData', writeToDoListDataToFile);
 ipcMain.handle('readToDoListData', readToDoListDataFromFile);
 
 ipcMain.handle('writeCompletedToDoItemData', writeCompletedToDoItemToFile);
-ipcMain.handle('read', readCompletedToDoItemsDataFromFile);
+ipcMain.handle('readToDoItemsData', readCompletedToDoItemsDataFromFile);
 
 app.on('ready', createWindow);

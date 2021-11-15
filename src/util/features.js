@@ -3,7 +3,8 @@ const FEATURES = new Map(
     [
         [ 'ToDoList', true ],
         [ 'Analysis', true ],
-        [ 'writeToDoListViaWebServer', true]
+        [ 'writeToDoListViaWebServer', true],
+        [ 'trackCompletedToDoItems', true ]
     ]
 );
 

@@ -38,6 +38,9 @@ const writeToDoListDataToFile = async (event, [toDoList]) => {
         FileSystem.delete(c_ToDoListDataFilePath);
         FileSystem.create(c_ToDoListDataFilePath);
     }
+    else {
+        FileSystem.create(c_ToDoListDataFilePath);
+    }
 
     console.log('write to do list ' + toDoList);
     for(let toDoItem of toDoList) {

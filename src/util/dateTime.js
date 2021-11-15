@@ -35,7 +35,7 @@ export const dateStamp = (date) => {
     return formattedDate;
 }
 
-export const timestamp = (date) => {
+export const timeStamp = (date) => {
     const formattedTime = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     return formattedTime;
 }
