@@ -1,16 +1,30 @@
+// const HttpStrings = {
+//     method : {
+//         GET: 'GET',
+//         POST: 'POST'
+//     },
+//     header : {
+//         CONTENT_TYPE: 'Content-Type',
+//         APPLICATION_JSON: 'applicatopn\json'
+//     }
+// }
+
 export default class MyHttpClient {
-    constructor() { }
-    static async SendRequest(url, options = { method: 'GET' }) {
-        console.log(options);
+    static async SendRequest(url, options) {
         try {
-            await fetch(url, options);
+            const res = await fetch(url, options);
+            const json = await res.json();
+            return json;
         }
         catch(error) {
             return { error: error.message };
         }
     }
     static async Get(url) {
-        await this.SendRequest(url);
+        const options = {
+            method: 'GET',
+        }
+        await this.SendRequest(url, options);
     }
     static async Post(url, payload) {
         const options = {

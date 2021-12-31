@@ -13,20 +13,23 @@ function Analysis() {
         changeHideCalendar(false);
         changeCalendarDate(new Date());
         changeTimeReport({});
-        changeCurrentChartData([]);
         changeCompletedToDoItems([]);
     }
 
     const fetchCompletedToDoItems = async () => {
         try {
+            // get to do items from file
             const allCompletedDoToItems = await ipcRenderer.invoke('readToDoItemsData');
 
-            const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
-    
+            // if not completedToDoItems, end
             if(!allCompletedDoToItems.length) {
                 return [];
             }
-    
+
+            // get formatted requrested date
+            const requestedDate = `${calendarDate.getMonth() + 1}/${calendarDate.getDate()}/${calendarDate.getFullYear()}`;
+            
+            // get all to do items on certain date
             const toDoItemsData = allCompletedDoToItems.filter(data => data.date === requestedDate);
             
             const toDoItemsMap = toDoItemsData.map((toDoItemData) => {

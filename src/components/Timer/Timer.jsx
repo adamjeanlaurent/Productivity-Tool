@@ -34,7 +34,7 @@ function Timer(props) {
         pomodoroTimer.Pause();
     }
 
-    const [pomodoroTimer, ] = useState(new PomodoroTimer('#timer'));
+    const [pomodoroTimer, setPomdoroTimer] = useState(new PomodoroTimer('#timer'));
     const [powerBlockerId, setPowerBlockerId] = useState(null);
   
     return (

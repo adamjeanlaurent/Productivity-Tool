@@ -19,7 +19,6 @@ export default class PomodoroTimer {
         catch {
             this.audio = null;
         }
-       
     }
 
     PlaySound() {

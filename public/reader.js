@@ -1,6 +1,3 @@
-const fs = require('fs');
-const fsSync = require('fs');
-
 const FileSystem = require('./FileSystem');
 
 const c_TimerDataFilePath = './timeReport.txt';

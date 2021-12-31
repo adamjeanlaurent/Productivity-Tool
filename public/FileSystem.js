@@ -3,11 +3,18 @@ const fsAsync = require('fs/promises');
 
 class FileSystem {
     static create(filepath) {
+        if(this.exists(filepath)) {
+            this.delete(filepath);
+        }
         fsSync.closeSync(fsSync.openSync(filepath, 'w'));
+        return this.exists(filepath);
     }
 
     static delete(filepath) {
-        fsSync.unlinkSync(filepath);
+        if(this.exists(filepath)) {
+            fsSync.unlinkSync(filepath);
+        }
+        return this.exists(filepath);
     }
 
     static exists(filepath) {
@@ -19,7 +26,10 @@ class FileSystem {
     }
 
     static readUTF8(filepath) {
-        return fsSync.readFileSync(filepath, 'UTF-8');
+        if(this.exists(filepath)) {
+            return fsSync.readFileSync(filepath, 'UTF-8');
+        }
+        return '';
     }
 }
 

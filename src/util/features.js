@@ -1,10 +1,10 @@
 // features
 const FEATURES = new Map(
     [
-        [ 'ToDoList', true ],
+        [ 'ToDoList', false ],
         [ 'Analysis', true ],
         [ 'writeToDoListViaWebServer', true],
-        [ 'trackCompletedToDoItems', true ]
+        [ 'trackCompletedToDoItems', false ]
     ]
 );
 
